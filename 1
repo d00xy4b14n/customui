@@ -822,6 +822,44 @@ function Section:ColorPicker(name, default, callback)
     end}
 end
 
+function Section:AddToggle(o)
+    o = o or {}
+    return self:Toggle(o.Name, o.Default, o.Callback)
+end
+
+function Section:AddSlider(o)
+    o = o or {}
+    return self:Slider(o.Name, o.Min or 0, o.Max or 100, o.Default or 0, o.Callback)
+end
+
+function Section:AddDropdown(o)
+    o = o or {}
+    return self:Dropdown(o.Name, o.Options or {}, o.Default, o.Callback)
+end
+
+function Section:AddButton(o)
+    o = o or {}
+    return self:Button(o.Name, o.Callback)
+end
+
+function Section:AddLabel(o)
+    if type(o) == "table" then o = o.Name or o.Text or "" end
+    return self:Label(o)
+end
+
+function Section:AddParagraph(title, text)
+    if type(title) == "table" then
+        text = text or ""
+        title = title.Title or title.Name or ""
+    end
+    self:Paragraph(title, text)
+end
+
+function Section:AddColorpicker(o)
+    o = o or {}
+    return self:ColorPicker(o.Name, o.Default, o.Callback)
+end
+
 --=== TAB CLASS ===
 
 local Tab = {}
@@ -931,6 +969,10 @@ end
 
 function Tab:Section(title)
     return Section.new(self.scroll, title)
+end
+
+function Tab:AddSection(opts)
+    return self:Section(opts and opts.Name or "")
 end
 
 --=== UI ROOT ===
@@ -1175,6 +1217,23 @@ function UI.Notify(title, content, duration)
         end
         task.delay(0.3, function() toast:Destroy() end)
     end)
+end
+
+function UI:MakeWindow(_)
+    return self
+end
+
+function UI:MakeTab(o)
+    o = o or {}
+    return self:Tab(o.Name or "Tab", o.Icon)
+end
+
+function UI:MakeNotification(o)
+    o = o or {}
+    UI.Notify(o.Name or "Notice", o.Content or "", o.Time or 4)
+end
+
+function UI:Init()
 end
 
 return UI
