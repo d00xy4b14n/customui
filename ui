@@ -545,8 +545,8 @@ RunService.RenderStepped:Connect(function(dt)
         stretchOffset = stretchOffset + stretchVel * step
     end
 
-    local curW = math.floor(baseW + stretchOffset.X + 0.5)
-    local curH = math.floor(baseH + stretchOffset.Y + 0.5)
+    local curW = math.floor(baseW + stretchOffset.X + 1)
+    local curH = math.floor(baseH + stretchOffset.Y + 1)
 
     local renderX = math.floor(currentPos.X - stretchOffset.X * 0.5 + 0.5)
     local renderY = math.floor(currentPos.Y - stretchOffset.Y * 0.5 + 0.5)
